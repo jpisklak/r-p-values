@@ -1,0 +1,389 @@
+---
+title: "Calculating P-Values Using R"
+author: "Jeffrey M. Pisklak"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(RColorBrewer)
+# palette.colors(palette = "Okabe-Ito")
+crit_col <- brewer.pal(8, 'Dark2')[4]
+prob_col <- brewer.pal(8, 'Dark2')[2]
+alpha <- 0.05
+df <- 4
+```
+
+- Critical Region ($\alpha = .05$) is shown in pink. 
+- Solid vertical red line is the test-statistic.
+- The probability of a test-statistic (i.e. p-value) is shown in brown.
+- Degrees of freedom are set to 4 in all examples.
+
+<br>
+
+# **Two-Tailed Tests**
+
+### 1. If your **test-statistic is negative** (e.g., $T = -1.5$), then you are going to use . . .
+
+```{r echo = TRUE}
+pt(-1.5, df = 4) * 2
+```
+
+```{r echo = FALSE, fig.width = 5, fig.height = 4, message = FALSE}
+t_stat <- -1.5
+p <- pt(t_stat, df = df) * 2
+x <- seq(from = -4, to = 4, by = .001)
+dens <- dt(x, df = df)
+dist_df <- data.frame(x, dens)
+
+sub_title <- paste("E.g., T = ", t_stat, ", df = ", df, sep = "")
+plt_anno <- paste("T = ", t_stat, "\np = ", round(p, 3),sep = "")
+
+ggplot(dist_df, aes(x = x, y = dens)) +
+
+  # Title
+  labs(
+    title = "Two-Tailed",
+    subtitle = sub_title
+  ) +
+
+  # Left tail probability
+  geom_ribbon(
+    data = subset(dist_df, x < -1.5),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = prob_col,
+    colour = NA,
+    alpha = 0.5
+  ) +
+
+  # Right tail probability
+  geom_ribbon(
+    data = subset(dist_df, x > 1.5),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = prob_col,
+    colour = NA,
+    alpha = 0.5
+  ) +
+
+  # Test-stat vertical line
+  geom_vline(
+    xintercept = t_stat,
+    colour = "black",
+    linewidth = 1
+  ) +
+  annotate("text",
+    x = -3,
+    y = .25,
+    label = plt_anno
+  ) +
+
+  # Axis Scale
+  scale_x_continuous(
+    breaks = seq(-4, 4, 1)
+  ) +
+
+  # Left tail 95% threshold
+  geom_ribbon(
+    data = subset(
+      dist_df,
+      x < qt(alpha / 2, df = df)
+    ),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = crit_col,
+    colour = NA,
+    alpha = 0.5
+  ) +
+
+  # Right tail 95% threshold
+  geom_ribbon(
+    data = subset(
+      dist_df,
+      x > qt(1 - alpha / 2, df = df)
+    ),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = crit_col,
+    colour = NA,
+    alpha = 0.5
+  ) +
+  geom_line(linewidth = 1) +
+  xlab("t-score") +
+  ylab("Density") +
+  theme(
+    axis.text.x = element_text(colour = "black", size = 12),
+    axis.title = element_text(colour = "black", size = 16),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank()
+  )
+```
+
+<br>
+
+<br>
+
+### 2. If your **test-statistic is positive** (e.g., $T = 1.5$), then you are going to use . . .
+
+```{r echo = TRUE}
+pt(1.5, df = 4, lower.tail = FALSE) * 2
+```
+
+
+```{r echo = FALSE, fig.width = 5, fig.height = 4, message = FALSE}
+t_stat <- 1.5
+p <- pt(1.5, df = df, lower.tail = FALSE) * 2
+x <- seq(from = -4, to = 4, by = .001)
+dens <- dt(x, df = df)
+dist_df <- data.frame(x, dens)
+
+sub_title <- paste("E.g., T = ", t_stat, ", df = ", df, sep = "")
+plt_anno <- paste("T = ", t_stat, "\np = ", round(p, 3),sep = "")
+
+ggplot(dist_df, aes(x = x, y = dens)) +
+
+  # Title
+  labs(
+    title = "Two-Tailed",
+    subtitle = sub_title
+  ) +
+
+  # Left tail probability
+  geom_ribbon(
+    data = subset(dist_df, x < -1.5),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = prob_col,
+    colour = NA,
+    alpha = .5
+  ) +
+
+  # Right tail probability
+  geom_ribbon(
+    data = subset(dist_df, x > 1.5),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = prob_col,
+    colour = NA,
+    alpha = .5
+  ) +
+  
+  # Test-stat vertical line
+  geom_vline(
+    xintercept = 1.5,
+    colour = "black",
+    linewidth = 1
+  ) +
+  annotate("text",
+    x = 3,
+    y = .25,
+    label = plt_anno
+  ) +
+
+  # Axis Scale
+  scale_x_continuous(
+    breaks = seq(-4, 4, 1)
+  ) +
+
+  # Left tail 95% threshold
+  geom_ribbon(
+    data = subset(
+      dist_df,
+      x < qt(alpha / 2, df = df)
+    ),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = crit_col,
+    colour = NA,
+    alpha = 0.5
+  ) +
+
+  # Right tail 95% threshold
+  geom_ribbon(
+    data = subset(
+      dist_df,
+      x > qt(1 - alpha / 2, df = df)
+    ),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = crit_col,
+    colour = NA,
+    alpha = 0.5
+  ) +
+  geom_line(linewidth = 1) +
+  xlab("t-score") +
+  ylab("Density") +
+  theme(
+    axis.text.x = element_text(colour = "black", size = 12),
+    axis.title = element_text(colour = "black", size = 16),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank()
+  )
+```
+
+<br>
+
+<br>
+
+## **One-tailed tests**
+
+### 3. If your **critical region is in the left tail** (i.e., $H_0 : \mu > x$) then you are going to use . . .
+
+```{r echo = TRUE}
+pt(1.5, df = 4)
+```
+
+```{r echo = FALSE, fig.width = 5, fig.height = 4, message = FALSE}
+t_stat <- 1.5
+p <- pt(1.5, df = df)
+x <- seq(from = -4, to = 4, by = .001)
+dens <- dt(x, df = df)
+dist_df <- data.frame(x, dens)
+
+sub_title <- paste("E.g., T = ", t_stat, ", df = ", df, sep = "")
+plt_anno <- paste("T = ", t_stat, "\np = ", round(p, 3),sep = "")
+
+ggplot(dist_df, aes(x = x, y = dens)) +
+
+  # Title
+  labs(
+    title = "One-Tailed",
+    subtitle = sub_title
+  ) +
+
+  # Left tail probability
+  geom_ribbon(
+    data = subset(dist_df, x < 1.5),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = prob_col,
+    colour = NA,
+    alpha = .5
+  ) +
+  
+  # Test-stat vertical line
+  geom_vline(
+    xintercept = 1.5,
+    colour = "black",
+    linewidth = 1
+  ) +
+  annotate("text",
+    x = 3,
+    y = .25,
+    label = plt_anno
+  ) +
+
+  # Axis Scale
+  scale_x_continuous(
+    breaks = seq(-4, 4, 1)
+  ) +
+
+  # Left tail 95% threshold
+  geom_ribbon(
+    data = subset(
+      dist_df,
+      x < qt(alpha, df = df)
+    ),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = crit_col,
+    colour = NA,
+    alpha = 0.5
+  ) +
+  geom_line(linewidth = 1) +
+  xlab("t-score") +
+  ylab("Density") +
+  theme(
+    axis.text.x = element_text(colour = "black", size = 12),
+    axis.title = element_text(colour = "black", size = 16),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank()
+  )
+```
+
+<br>
+
+<br>
+
+### 4. If your **critical region is in the right tail** (i.e., $H_0 : \mu < x$) then you are going to use . . .
+
+```{r echo = TRUE}
+pt(1.5, df = 4, lower.tail = FALSE)
+```
+
+```{r echo = FALSE, fig.width = 5, fig.height = 4, message = FALSE}
+t_stat <- 1.5
+p <- pt(t_stat, df = df, lower.tail = FALSE)
+x <- seq(from = -4, to = 4, by = .001)
+dens <- dt(x, df = df)
+dist_df <- data.frame(x, dens)
+
+sub_title <- paste("E.g., T = ", t_stat, ", df = ", df, sep = "")
+plt_anno <- paste("T = ", t_stat, "\np = ", round(p, 3),sep = "")
+
+ggplot(dist_df, aes(x = x, y = dens)) +
+
+  # Title
+  labs(
+    title = "One-Tailed",
+    subtitle = sub_title
+  ) +
+
+  # Right tail probability
+  geom_ribbon(
+    data = subset(dist_df, x > 1.5),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = prob_col,
+    colour = NA,
+    alpha = .5
+  ) +
+  
+  # Test-stat vertical line
+  geom_vline(
+    xintercept = 1.5,
+    colour = "black",
+    linewidth = 1
+  ) +
+  annotate("text",
+    x = 3,
+    y = .25,
+    label = plt_anno
+  ) +
+
+  # Axis Scale
+  scale_x_continuous(
+    breaks = seq(-4, 4, 1)
+  ) +
+
+  # Right tail 95% threshold
+  geom_ribbon(
+    data = subset(
+      dist_df,
+      x > qt(1 - alpha, df = df)
+    ),
+    aes(ymax = dens),
+    ymin = 0,
+    fill = crit_col,
+    colour = NA,
+    alpha = 0.5
+  ) +
+  geom_line(linewidth = 1) +
+  xlab("t-score") +
+  ylab("Density") +
+  theme(
+    axis.text.x = element_text(colour = "black", size = 12),
+    axis.title = element_text(colour = "black", size = 16),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank()
+  )
+```
+
+<br>
+
+<br>
+
+<br>
