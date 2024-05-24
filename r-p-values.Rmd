@@ -17,7 +17,7 @@ df <- 4
 ```
 
 - Critical Region ($\alpha = .05$) is shown in light red. 
-- Solid vertical red line is the test-statistic.
+- Solid vertical black line is the test-statistic.
 - The probability of a test-statistic (i.e. p-value) is shown in brown.
 - Degrees of freedom are set to 4 in all examples.
 
