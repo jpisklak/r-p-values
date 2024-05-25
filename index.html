@@ -11,7 +11,7 @@
 
 <meta name="author" content="Jeffrey M. Pisklak" />
 
-<meta name="date" content="2024-05-24" />
+<meta name="date" content="2024-05-25" />
 
 <title>Calculating P-Values Using R</title>
 
@@ -352,7 +352,7 @@ display: none;
 
 <h1 class="title toc-ignore">Calculating P-Values Using R</h1>
 <h4 class="author">Jeffrey M. Pisklak</h4>
-<h4 class="date">2024-05-24</h4>
+<h4 class="date">2024-05-25</h4>
 
 </div>
 
@@ -368,6 +368,13 @@ brown.</li>
 <p><br></p>
 <div id="two-tailed-tests" class="section level1">
 <h1><strong>Two-Tailed Tests</strong></h1>
+<h5>
+<ul>
+<li>For two-tailed tests, what is matters is whether the test-statistic
+lands in the left or right tail; i.e., whether it is negative or
+positive.</li>
+</ul>
+</h5>
 <div id="if-your-test-statistic-is-negative-e.g.-t--1.5-then-you-are-going-to-use-.-.-." class="section level3">
 <h3>1. If your <strong>test-statistic is negative</strong> (e.g., <span class="math inline">\(T = -1.5\)</span>), then you are going to use . .
 .</h3>
@@ -386,8 +393,16 @@ brown.</li>
 <p><br></p>
 <p><br></p>
 </div>
-<div id="one-tailed-tests" class="section level2">
-<h2><strong>One-tailed tests</strong></h2>
+</div>
+<div id="one-tailed-tests" class="section level1">
+<h1><strong>One-tailed tests</strong></h1>
+<h5>
+<ul>
+<li>For one-tailed tests, what is matters is where the critical region
+is located (left or right tail). This is determined by the null
+hypothesis.</li>
+</ul>
+</h5>
 <div id="if-your-critical-region-is-in-the-left-tail-i.e.-h_0-mu-x-then-you-are-going-to-use-.-.-." class="section level3">
 <h3>3. If your <strong>critical region is in the left tail</strong>
 (i.e., <span class="math inline">\(H_0 : \mu &gt; x\)</span>) then you
@@ -408,7 +423,6 @@ are going to use . . .</h3>
 <p><br></p>
 <p><br></p>
 <p><br></p>
-</div>
 </div>
 </div>
 
