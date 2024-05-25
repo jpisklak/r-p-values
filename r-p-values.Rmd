@@ -25,6 +25,10 @@ df <- 4
 
 # **Two-Tailed Tests**
 
+<h5>
+- For two-tailed tests, what is matters is whether the test-statistic lands in the left or right tail; i.e., whether it is negative or positive.
+</h5>
+
 ### 1. If your **test-statistic is negative** (e.g., $T = -1.5$), then you are going to use . . .
 
 ```{r echo = TRUE}
@@ -228,7 +232,11 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 <br>
 
-## **One-tailed tests**
+# **One-tailed tests**
+
+<h5>
+- For one-tailed tests, what is matters is where the critical region is located (left or right tail). This is determined by the null hypothesis.
+</h5>
 
 ### 3. If your **critical region is in the left tail** (i.e., $H_0 : \mu > x$) then you are going to use . . .
 
