@@ -398,7 +398,7 @@ $\begin{aligned}
 \end{aligned}$
 
 - The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu < 1.5$.
-- The critical t-score marks the boundary of the upper tail's critical (rejection) region and encompasses the *entire* significance level $\alpha$ for one-tailed tests. This is the area displayed in red.
+- For one-tailed tests, the critical t-score is calculated using the *entire* significance level $\alpha$.
 
 ```{r}
 # Critical t-calculation
@@ -507,7 +507,7 @@ $\begin{aligned}
 \end{aligned}$
 
 - The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu > 1.5$.
-- The critical t-score marks the boundary of the lower tail's critical (rejection) region and encompasses the *entire* significance level $\alpha$ for one-tailed tests. This is the area displayed in red.
+- For one-tailed tests, the critical t-score is calculated using the *entire* significance level $\alpha$.
 
 ```{r}
 # Critical t-calculation
