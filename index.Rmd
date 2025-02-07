@@ -152,7 +152,7 @@ $\begin{aligned}
 &= [\text{lower bound }, \text{ upper bound}]
 \end{aligned}$
 
-- The critical t-score marks the boundary of a tail containing *half* of $\alpha$ (e.g., 2.5% of the distribution for a 95% confidence interval).
+- The critical t-score marks the boundary of a tail containing *half* of $\alpha$ (e.g., 2.5% of the distribution for a 95% confidence interval). This is the area displayed in red.
 - Together, both tails account for the full $\alpha$ (e.g., 5%).
 
 ```{r}
@@ -283,7 +283,7 @@ $\begin{aligned}
 &= [\text{lower bound }, \text{ upper bound}]
 \end{aligned}$
 
-- The critical t-score marks the boundary of a tail containing *half* of $\alpha$ (e.g., 2.5% of the distribution for a 95% confidence interval).
+- The critical t-score marks the boundary of a tail containing *half* of $\alpha$ (e.g., 2.5% of the distribution for a 95% confidence interval). This is the area displayed in red.
 - Together, both tails account for the full $\alpha$ (e.g., 5%).
 
 ```{r}
@@ -398,7 +398,7 @@ $\begin{aligned}
 \end{aligned}$
 
 - The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu < 1.5$.
-- The critical t-score marks the boundary of the upper tail and encompasses the *entire* significance level $\alpha$ for one-tailed tests.
+- The critical t-score marks the boundary of the upper tail and encompasses the *entire* significance level $\alpha$ for one-tailed tests. This is the area displayed in red.
 
 ```{r}
 # Critical t-calculation
@@ -507,7 +507,7 @@ $\begin{aligned}
 \end{aligned}$
 
 - The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu > 1.5$.
-- The critical t-score marks the boundary of the lower tail and encompasses the *entire* significance level $\alpha$ for one-tailed tests.
+- The critical t-score marks the boundary of the lower tail and encompasses the *entire* significance level $\alpha$ for one-tailed tests. This is the area displayed in red.
 
 ```{r}
 # Critical t-calculation
