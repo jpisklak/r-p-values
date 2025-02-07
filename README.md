@@ -1,4 +1,4 @@
-# Computing p-values using R
+# Guide to Computing *p*-values using R
 
 This repository hosts the code for a straightforward HTML guide on computing p-values with the R programming language. Historically, many educators have utilized tables to instruct students on p-value determination. The guide, `index.html`, endeavors to offer a contemporary and accurate method for computing p-values that many students are never exposed to in their introductory statistics classes.
 

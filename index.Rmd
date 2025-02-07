@@ -1,5 +1,5 @@
 ---
-title: "Calculating P-Values Using R"
+title: "Guide to Computing P-Values Using R"
 author: "Jeffrey M. Pisklak"
 date: "`r Sys.Date()`"
 output: html_document
