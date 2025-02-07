@@ -5,6 +5,14 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
+<style>
+details > summary {
+  padding: 4px;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+</style>
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -20,6 +28,7 @@ df <- 4
 - Solid vertical black line is the test-statistic.
 - The probability of a test-statistic (i.e. p-value) is shown in brown.
 - Degrees of freedom are set to 4 in all examples.
+- Additional notes pertaining to one- and two-sided confidence interval calculations are also provided.
 
 <br>
 
@@ -27,6 +36,7 @@ df <- 4
 
 <h5>
 - For two-tailed tests, what is matters is whether the test-statistic lands in the left or right tail; i.e., whether it is negative or positive.
+- Note that the probability (i.e., p-value's area under the curve) is mirrored in the case of two-tailed tests.
 </h5>
 
 ### 1. If your **test-statistic is negative** (e.g., $T = -1.5$), then you are going to use . . .
@@ -38,7 +48,7 @@ pt(-1.5, df = 4) * 2
 ```{r echo = FALSE, fig.width = 5, fig.height = 4, message = FALSE}
 t_stat <- -1.5
 p <- pt(t_stat, df = df) * 2
-x <- seq(from = -4, to = 4, by = .001)
+x <- seq(from = -6, to = 6, by = .001)
 dens <- dt(x, df = df)
 dist_df <- data.frame(x, dens)
 
@@ -65,7 +75,7 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
   # Right tail probability
   geom_ribbon(
-    data = subset(dist_df, x > 1.5),
+    data = subset(dist_df, x >= 1.5),
     aes(ymax = dens),
     ymin = 0,
     fill = prob_col,
@@ -89,6 +99,8 @@ ggplot(dist_df, aes(x = x, y = dens)) +
   scale_x_continuous(
     breaks = seq(-4, 4, 1)
   ) +
+  
+  coord_cartesian(xlim = c(-4, 4)) +
 
   # Left tail 95% threshold
   geom_ribbon(
@@ -128,6 +140,33 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 <br>
 
+<details>
+  <summary>
+  Click here for Corresponding Confidence Interval Information
+  </summary>
+
+<br>
+
+$\begin{aligned}
+\text{Confidence Interval} &= \bar{x} \pm \text{(critical t-score)} \cdot \text{(standard error)} \\
+&= [\text{lower bound }, \text{ upper bound}]
+\end{aligned}$
+
+- The critical t-score marks the boundary of a tail containing *half* of $\alpha$ (e.g., 2.5% of the distribution for a 95% confidence interval).
+- Together, both tails account for the full $\alpha$ (e.g., 5%).
+
+```{r}
+# Critical t-calculation
+alpha <- 0.05
+abs(qt(alpha / 2, df = 4))
+```
+
+- The absolute value (`abs()`) is used because the confidence interval equation already accounts for the direction of each boundary through addition (+) and subtraction (-). This eliminates the need to compute separate critical t-scores for each side.
+
+</details>
+
+<br>
+
 <br>
 
 ### 2. If your **test-statistic is positive** (e.g., $T = 1.5$), then you are going to use . . .
@@ -140,7 +179,7 @@ pt(1.5, df = 4, lower.tail = FALSE) * 2
 ```{r echo = FALSE, fig.width = 5, fig.height = 4, message = FALSE}
 t_stat <- 1.5
 p <- pt(1.5, df = df, lower.tail = FALSE) * 2
-x <- seq(from = -4, to = 4, by = .001)
+x <- seq(from = -6, to = 6, by = .001)
 dens <- dt(x, df = df)
 dist_df <- data.frame(x, dens)
 
@@ -191,6 +230,8 @@ ggplot(dist_df, aes(x = x, y = dens)) +
   scale_x_continuous(
     breaks = seq(-4, 4, 1)
   ) +
+  
+  coord_cartesian(xlim = c(-4, 4)) +
 
   # Left tail 95% threshold
   geom_ribbon(
@@ -230,15 +271,43 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 <br>
 
+<details>
+  <summary>
+  Click here for Corresponding Confidence Interval Information
+  </summary>
+
+<br>
+
+$\begin{aligned}
+\text{Confidence Interval} &= \bar{x} \pm \text{(critical t-score)} \cdot \text{(standard error)} \\
+&= [\text{lower bound }, \text{ upper bound}]
+\end{aligned}$
+
+- The critical t-score marks the boundary of a tail containing *half* of $\alpha$ (e.g., 2.5% of the distribution for a 95% confidence interval).
+- Together, both tails account for the full $\alpha$ (e.g., 5%).
+
+```{r}
+# Critical t-calculation
+alpha <- 0.05
+abs(qt(alpha / 2, df = 4))
+```
+
+- The absolute value (`abs()`) is used because the confidence interval equation already accounts for the direction of each boundary through addition (+) and subtraction (-). This eliminates the need to compute separate critical t-scores for each side.
+
+</details>
+
+<br>
+
 <br>
 
 # **One-tailed tests**
 
 <h5>
 - For one-tailed tests, what is matters is where the critical region is located (left or right tail). This is determined by the null hypothesis.
+- Whether the test-statistic is positive or negative has no bearing on how the p-value is calculated.
 </h5>
 
-### 3. If your **critical region is in the left tail** (i.e., $H_0 : \mu > x$) then you are going to use . . .
+### 3. If your **critical region is in the left tail** (e.g., $H_0 : \mu \geq 1.5$) then you are going to use . . .
 
 ```{r echo = TRUE}
 pt(1.5, df = 4)
@@ -247,7 +316,7 @@ pt(1.5, df = 4)
 ```{r echo = FALSE, fig.width = 5, fig.height = 4, message = FALSE}
 t_stat <- 1.5
 p <- pt(1.5, df = df)
-x <- seq(from = -4, to = 4, by = .001)
+x <- seq(from = -6, to = 6, by = .001)
 dens <- dt(x, df = df)
 dist_df <- data.frame(x, dens)
 
@@ -288,6 +357,8 @@ ggplot(dist_df, aes(x = x, y = dens)) +
   scale_x_continuous(
     breaks = seq(-4, 4, 1)
   ) +
+  
+  coord_cartesian(xlim = c(-4, 4)) +
 
   # Left tail 95% threshold
   geom_ribbon(
@@ -314,9 +385,36 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 <br>
 
+<details>
+  <summary>
+  Click here for Corresponding Confidence Interval Information
+  </summary>
+
 <br>
 
-### 4. If your **critical region is in the right tail** (i.e., $H_0 : \mu < x$) then you are going to use . . .
+$\begin{aligned}
+\text{Confidence Interval} &= \bar{x} + \text{(critical t-score)} \cdot \text{(standard error)} \\
+&= (-\infty, \text{ upper bound}]
+\end{aligned}$
+
+- The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu < 1.5$.
+- The critical t-score marks the boundary of the upper tail and encompasses the *entire* significance level $\alpha$ for one-tailed tests.
+
+```{r}
+# Critical t-calculation
+alpha <- 0.05
+abs(qt(alpha, df = 4))
+```
+
+- The absolute value (`abs()`) is used because the direction of the boundary is already specified by the addition (+) in the confidence interval equation.
+
+</details>
+
+<br>
+
+<br>
+
+### 4. If your **critical region is in the right tail** (e.g., $H_0 : \mu \leq 1.5$) then you are going to use . . .
 
 ```{r echo = TRUE}
 pt(1.5, df = 4, lower.tail = FALSE)
@@ -325,7 +423,7 @@ pt(1.5, df = 4, lower.tail = FALSE)
 ```{r echo = FALSE, fig.width = 5, fig.height = 4, message = FALSE}
 t_stat <- 1.5
 p <- pt(t_stat, df = df, lower.tail = FALSE)
-x <- seq(from = -4, to = 4, by = .001)
+x <- seq(from = -6, to = 6, by = .001)
 dens <- dt(x, df = df)
 dist_df <- data.frame(x, dens)
 
@@ -366,6 +464,8 @@ ggplot(dist_df, aes(x = x, y = dens)) +
   scale_x_continuous(
     breaks = seq(-4, 4, 1)
   ) +
+  
+  coord_cartesian(xlim = c(-4, 4)) +
 
   # Right tail 95% threshold
   geom_ribbon(
@@ -391,6 +491,33 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 ```
 
 <br>
+
+<br>
+
+<details>
+  <summary>
+  Click here for Corresponding Confidence Interval Information
+  </summary>
+
+<br>
+
+$\begin{aligned}
+\text{Confidence Interval} &= \bar{x} - \text{(critical t-score)} \cdot \text{(standard error)} \\
+&= [\text{lower bound }, \infty)
+\end{aligned}$
+
+- The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu > 1.5$.
+- The critical t-score marks the boundary of the lower tail and encompasses the *entire* significance level $\alpha$ for one-tailed tests.
+
+```{r}
+# Critical t-calculation
+alpha <- 0.05
+abs(qt(alpha, df = 4))
+```
+
+- The absolute value (`abs()`) is used because the direction of the boundary is already specified by the subtraction (-) in the confidence interval equation.
+
+</details>
 
 <br>
 
