@@ -149,7 +149,7 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 $\begin{aligned}
 \text{Confidence Interval} &= \bar{x} \pm \text{(critical t-score)} \cdot \text{(standard error)} \\
-&= [\text{lower bound }, \text{ upper bound}]
+&= [\text{ lower bound}, \text{ upper bound }]
 \end{aligned}$
 
 - The critical t-score marks the boundary of a tail's critical (rejection) region containing *half* of $\alpha$ (e.g., 2.5% of the distribution for a 95% confidence interval). This is the area displayed in red.
@@ -280,7 +280,7 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 $\begin{aligned}
 \text{Confidence Interval} &= \bar{x} \pm \text{(critical t-score)} \cdot \text{(standard error)} \\
-&= [\text{lower bound }, \text{ upper bound}]
+&= [\text{ lower bound}, \text{ upper bound }]
 \end{aligned}$
 
 - The critical t-score marks the boundary of a tail's critical (rejection) region containing *half* of $\alpha$ (e.g., 2.5% of the distribution for a 95% confidence interval). This is the area displayed in red.
@@ -394,7 +394,7 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 $\begin{aligned}
 \text{Confidence Interval} &= \bar{x} + \text{(critical t-score)} \cdot \text{(standard error)} \\
-&= (-\infty, \text{ upper bound}]
+&= (-\infty, \text{ upper bound }]
 \end{aligned}$
 
 - The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu < 1.5$.
@@ -503,7 +503,7 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 $\begin{aligned}
 \text{Confidence Interval} &= \bar{x} - \text{(critical t-score)} \cdot \text{(standard error)} \\
-&= [\text{lower bound }, \infty)
+&= [\text{ lower bound}, \infty)
 \end{aligned}$
 
 - The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu > 1.5$.
