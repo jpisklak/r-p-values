@@ -22,9 +22,9 @@ Pisklak, J. M. (2025). *Calculating p-values in R: A quick and dirty guide*. htt
 **BibTeX:**
 ```bibtex
 @misc{ ,
-  author       = {Pisklak, Jeffrey M.},
-  title        = {Calculating p-values in R: A quick and dirty guide},
-  year         = {2025},
-  url          = {https://jpisklak.github.io/r-p-values}
+  author  = {Pisklak, Jeffrey M.},
+  title   = {Calculating p-values in R: A quick and dirty guide},
+  year    = {2025},
+  url     = {https://jpisklak.github.io/r-p-values}
 }
 ```
