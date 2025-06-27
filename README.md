@@ -1,8 +1,30 @@
-# Guide to Computing *p*-values using R
+# Calculating $p$-Values in R: A Quick and Dirty Guide
 
-This repository hosts the code for a straightforward HTML guide on computing p-values with the R programming language. Historically, many educators have utilized tables to instruct students on p-value determination. The guide, `index.html`, endeavors to offer a contemporary and accurate method for computing p-values that many students are never exposed to in their introductory statistics classes.
+This repository provides a simple HTML-based guide for calculating $p$-values using the R programming language.
 
-To access the document online, simply visit the following link: [Computing p-values with R](https://jpisklak.github.io/r-p-values/index.html)
+Historically, statistics instruction has relied heavily on printed tables to teach students how to determine $p$-values. This guide, `index.html`, presents a more modern and reproducible approach that leverages R code to perform these calculations directly. It is designed as a lightweight reference for students and instructors who want a fast, code-first alternative to traditional lookup methods.
 
-## License
-This project is licensed under the [GNU GENERAL PUBLIC LICENSE](LICENSE).
+**Note:** This guide does *not* offer a conceptual deep dive into the meaning, limitations, or appropriate use of $p$-values. It is intended strictly as a practical coding reference for computing them in R.
+
+You can access the guide online here:  
+[https://jpisklak.github.io/r-p-values](https://jpisklak.github.io/r-p-values)
+
+---
+
+## Citation
+
+If you would like to cite this guide in your work or course materials, please use the following reference:
+
+**APA Style:**
+
+Pisklak, J. M. (2025). *Calculating p-values in R: A quick and dirty guide*. https://jpisklak.github.io/r-p-values
+
+**BibTeX:**
+```bibtex
+@misc{ ,
+  author       = {Pisklak, Jeffrey M.},
+  title        = {Calculating p-values in R: A quick and dirty guide},
+  year         = {2025},
+  url          = {https://jpisklak.github.io/r-p-values}
+}
+```

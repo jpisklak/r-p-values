@@ -11,9 +11,9 @@
 
 <meta name="author" content="Jeffrey M. Pisklak" />
 
-<meta name="date" content="2025-02-07" />
+<meta name="date" content="2025-06-27" />
 
-<title>Guide to Computing P-Values Using R</title>
+<title>Calculating p-values in R: A Quick and Dirty Guide</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,9 +350,10 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Guide to Computing P-Values Using R</h1>
+<h1 class="title toc-ignore">Calculating <span class="math inline">\(p\)</span>-values in R: A Quick and Dirty
+Guide</h1>
 <h4 class="author">Jeffrey M. Pisklak</h4>
-<h4 class="date">2025-02-07</h4>
+<h4 class="date">2025-06-27</h4>
 
 </div>
 
@@ -368,8 +369,7 @@ font-size: 1.5em;
 <li>Critical Region (<span class="math inline">\(\alpha = .05\)</span>)
 is shown in light red.</li>
 <li>Solid vertical black line is the test-statistic.</li>
-<li>The probability of a test-statistic (i.e. p-value) is shown in
-brown.</li>
+<li>The probability of a test-statistic (i.e. <span class="math inline">\(p\)</span>-value) is shown in brown.</li>
 <li>Degrees of freedom are set to 4 in all examples.</li>
 <li>Additional notes pertaining to one- and two-sided confidence
 interval calculations are also provided.</li>
@@ -382,7 +382,7 @@ interval calculations are also provided.</li>
 <li>For two-tailed tests, what is matters is whether the test-statistic
 lands in the left or right tail; i.e., whether it is negative or
 positive.</li>
-<li>Note that the probability (i.e., p-value’s area under the curve) is
+<li>Note that the probability (i.e., <span class="math inline">\(p\)</span>-value’s area under the curve) is
 mirrored in the case of two-tailed tests.</li>
 </ul>
 </h5>
@@ -395,20 +395,14 @@ mirrored in the case of two-tailed tests.</li>
 <p><br></p>
 <details>
 <summary>
-Click here for Corresponding Confidence Interval Information
+Confidence Interval Information
 </summary>
 <p><br></p>
 <p><span class="math inline">\(\begin{aligned}
-\text{Confidence Interval} &amp;= \bar{x} \pm \text{(critical t-score)}
-\cdot \text{(standard error)} \\
+\text{Confidence Interval} &amp;= \bar{x} \pm \text{(critical
+$t$-score)} \cdot \text{(standard error)} \\
 &amp;= [\text{ lower bound}, \text{ upper bound }]
 \end{aligned}\)</span></p>
-<ul>
-<li>The critical t-score marks the boundary of a tail’s critical
-(rejection) region containing <em>half</em> of <span class="math inline">\(\alpha\)</span> (e.g., 2.5% of the distribution
-for a 95% confidence interval). This is the area displayed in red.</li>
-<li>Together, both tails account for the full <span class="math inline">\(\alpha\)</span> (e.g., 5%).</li>
-</ul>
 <pre class="r"><code># Critical t-calculation
 alpha &lt;- 0.05
 abs(qt(alpha / 2, df = 4))</code></pre>
@@ -417,7 +411,7 @@ abs(qt(alpha / 2, df = 4))</code></pre>
 <li>The absolute value (<code>abs()</code>) is used because the
 confidence interval equation already accounts for the direction of each
 boundary through addition (+) and subtraction (-). This eliminates the
-need to compute separate critical t-scores for each side.</li>
+need to compute separate critical <span class="math inline">\(t\)</span>-scores for each side.</li>
 </ul>
 </details>
 <p><br></p>
@@ -432,20 +426,14 @@ need to compute separate critical t-scores for each side.</li>
 <p><br></p>
 <details>
 <summary>
-Click here for Corresponding Confidence Interval Information
+Confidence Interval Information
 </summary>
 <p><br></p>
 <p><span class="math inline">\(\begin{aligned}
-\text{Confidence Interval} &amp;= \bar{x} \pm \text{(critical t-score)}
-\cdot \text{(standard error)} \\
+\text{Confidence Interval} &amp;= \bar{x} \pm \text{(critical
+$t$-score)} \cdot \text{(standard error)} \\
 &amp;= [\text{ lower bound}, \text{ upper bound }]
 \end{aligned}\)</span></p>
-<ul>
-<li>The critical t-score marks the boundary of a tail’s critical
-(rejection) region containing <em>half</em> of <span class="math inline">\(\alpha\)</span> (e.g., 2.5% of the distribution
-for a 95% confidence interval). This is the area displayed in red.</li>
-<li>Together, both tails account for the full <span class="math inline">\(\alpha\)</span> (e.g., 5%).</li>
-</ul>
 <pre class="r"><code># Critical t-calculation
 alpha &lt;- 0.05
 abs(qt(alpha / 2, df = 4))</code></pre>
@@ -454,7 +442,7 @@ abs(qt(alpha / 2, df = 4))</code></pre>
 <li>The absolute value (<code>abs()</code>) is used because the
 confidence interval equation already accounts for the direction of each
 boundary through addition (+) and subtraction (-). This eliminates the
-need to compute separate critical t-scores for each side.</li>
+need to compute separate critical <span class="math inline">\(t\)</span>-scores for each side.</li>
 </ul>
 </details>
 <p><br></p>
@@ -469,7 +457,7 @@ need to compute separate critical t-scores for each side.</li>
 (red) is located (left or right tail). This is determined by the null
 hypothesis.</li>
 <li>Whether the test-statistic is positive or negative has no bearing on
-how the p-value is calculated.</li>
+how the <span class="math inline">\(p\)</span>-value is calculated.</li>
 </ul>
 </h5>
 <div id="if-your-critical-region-is-in-the-left-tail-e.g.-h_0-mu-geq-1.5-then-you-are-going-to-use-.-.-." class="section level3">
@@ -482,25 +470,23 @@ are going to use . . .</h3>
 <p><br></p>
 <details>
 <summary>
-Click here for Corresponding Confidence Interval Information
+Confidence Interval Information
 </summary>
 <p><br></p>
 <p><span class="math inline">\(\begin{aligned}
-\text{Confidence Interval} &amp;= \bar{x} + \text{(critical t-score)}
+\text{Confidence Interval} &amp;= \bar{x} + \text{(critical $t$-score)}
 \cdot \text{(standard error)} \\
 &amp;= (-\infty, \text{ upper bound }]
 \end{aligned}\)</span></p>
-<ul>
-<li>The confidence interval is expressed in terms of the alternative
-hypothesis <span class="math inline">\(H_1: \mu &lt; 1.5\)</span>.</li>
-<li>For one-tailed tests, the critical t-score is calculated using the
-<em>entire</em> significance level <span class="math inline">\(\alpha\)</span>.</li>
-</ul>
 <pre class="r"><code># Critical t-calculation
 alpha &lt;- 0.05
 abs(qt(alpha, df = 4))</code></pre>
 <pre><code>## [1] 2.131847</code></pre>
 <ul>
+<li>The confidence interval is expressed in terms of the alternative
+hypothesis <span class="math inline">\(H_1: \mu &lt; 1.5\)</span>.</li>
+<li>For one-tailed tests, the critical <span class="math inline">\(t\)</span>-score is calculated using the
+<em>entire</em> significance level <span class="math inline">\(\alpha\)</span>.</li>
 <li>The absolute value (<code>abs()</code>) is used because the
 direction of the boundary is already specified by the addition (+) in
 the confidence interval equation.</li>
@@ -520,25 +506,23 @@ are going to use . . .</h3>
 <p><br></p>
 <details>
 <summary>
-Click here for Corresponding Confidence Interval Information
+Confidence Interval Information
 </summary>
 <p><br></p>
 <p><span class="math inline">\(\begin{aligned}
-\text{Confidence Interval} &amp;= \bar{x} - \text{(critical t-score)}
+\text{Confidence Interval} &amp;= \bar{x} - \text{(critical $t$-score)}
 \cdot \text{(standard error)} \\
 &amp;= [\text{ lower bound}, \infty)
 \end{aligned}\)</span></p>
-<ul>
-<li>The confidence interval is expressed in terms of the alternative
-hypothesis <span class="math inline">\(H_1: \mu &gt; 1.5\)</span>.</li>
-<li>For one-tailed tests, the critical t-score is calculated using the
-<em>entire</em> significance level <span class="math inline">\(\alpha\)</span>.</li>
-</ul>
 <pre class="r"><code># Critical t-calculation
 alpha &lt;- 0.05
 abs(qt(alpha, df = 4))</code></pre>
 <pre><code>## [1] 2.131847</code></pre>
 <ul>
+<li>The confidence interval is expressed in terms of the alternative
+hypothesis <span class="math inline">\(H_1: \mu &gt; 1.5\)</span>.</li>
+<li>For one-tailed tests, the critical <span class="math inline">\(t\)</span>-score is calculated using the
+<em>entire</em> significance level <span class="math inline">\(\alpha\)</span>.</li>
 <li>The absolute value (<code>abs()</code>) is used because the
 direction of the boundary is already specified by the subtraction (-) in
 the confidence interval equation.</li>

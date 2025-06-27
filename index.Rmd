@@ -1,5 +1,5 @@
 ---
-title: "Guide to Computing P-Values Using R"
+title: "Calculating $p$-values in R: A Quick and Dirty Guide"
 author: "Jeffrey M. Pisklak"
 date: "`r Sys.Date()`"
 output: html_document
@@ -26,7 +26,7 @@ df <- 4
 
 - Critical Region ($\alpha = .05$) is shown in light red. 
 - Solid vertical black line is the test-statistic.
-- The probability of a test-statistic (i.e. p-value) is shown in brown.
+- The probability of a test-statistic (i.e. $p$-value) is shown in brown.
 - Degrees of freedom are set to 4 in all examples.
 - Additional notes pertaining to one- and two-sided confidence interval calculations are also provided.
 
@@ -36,7 +36,7 @@ df <- 4
 
 <h5>
 - For two-tailed tests, what is matters is whether the test-statistic lands in the left or right tail; i.e., whether it is negative or positive.
-- Note that the probability (i.e., p-value's area under the curve) is mirrored in the case of two-tailed tests.
+- Note that the probability (i.e., $p$-value's area under the curve) is mirrored in the case of two-tailed tests.
 </h5>
 
 ### 1. If your **test-statistic is negative** (e.g., $T = -1.5$), then you are going to use . . .
@@ -142,18 +142,15 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 <details>
   <summary>
-  Click here for Corresponding Confidence Interval Information
+  Confidence Interval Information
   </summary>
 
 <br>
 
 $\begin{aligned}
-\text{Confidence Interval} &= \bar{x} \pm \text{(critical t-score)} \cdot \text{(standard error)} \\
+\text{Confidence Interval} &= \bar{x} \pm \text{(critical $t$-score)} \cdot \text{(standard error)} \\
 &= [\text{ lower bound}, \text{ upper bound }]
 \end{aligned}$
-
-- The critical t-score marks the boundary of a tail's critical (rejection) region containing *half* of $\alpha$ (e.g., 2.5% of the distribution for a 95% confidence interval). This is the area displayed in red.
-- Together, both tails account for the full $\alpha$ (e.g., 5%).
 
 ```{r}
 # Critical t-calculation
@@ -161,7 +158,7 @@ alpha <- 0.05
 abs(qt(alpha / 2, df = 4))
 ```
 
-- The absolute value (`abs()`) is used because the confidence interval equation already accounts for the direction of each boundary through addition (+) and subtraction (-). This eliminates the need to compute separate critical t-scores for each side.
+- The absolute value (`abs()`) is used because the confidence interval equation already accounts for the direction of each boundary through addition (+) and subtraction (-). This eliminates the need to compute separate critical $t$-scores for each side.
 
 </details>
 
@@ -273,18 +270,15 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 <details>
   <summary>
-  Click here for Corresponding Confidence Interval Information
+  Confidence Interval Information
   </summary>
 
 <br>
 
 $\begin{aligned}
-\text{Confidence Interval} &= \bar{x} \pm \text{(critical t-score)} \cdot \text{(standard error)} \\
+\text{Confidence Interval} &= \bar{x} \pm \text{(critical $t$-score)} \cdot \text{(standard error)} \\
 &= [\text{ lower bound}, \text{ upper bound }]
 \end{aligned}$
-
-- The critical t-score marks the boundary of a tail's critical (rejection) region containing *half* of $\alpha$ (e.g., 2.5% of the distribution for a 95% confidence interval). This is the area displayed in red.
-- Together, both tails account for the full $\alpha$ (e.g., 5%).
 
 ```{r}
 # Critical t-calculation
@@ -292,7 +286,7 @@ alpha <- 0.05
 abs(qt(alpha / 2, df = 4))
 ```
 
-- The absolute value (`abs()`) is used because the confidence interval equation already accounts for the direction of each boundary through addition (+) and subtraction (-). This eliminates the need to compute separate critical t-scores for each side.
+- The absolute value (`abs()`) is used because the confidence interval equation already accounts for the direction of each boundary through addition (+) and subtraction (-). This eliminates the need to compute separate critical $t$-scores for each side.
 
 </details>
 
@@ -304,7 +298,7 @@ abs(qt(alpha / 2, df = 4))
 
 <h5>
 - For one-tailed tests, what is matters is where the critical region (red) is located (left or right tail). This is determined by the null hypothesis.
-- Whether the test-statistic is positive or negative has no bearing on how the p-value is calculated.
+- Whether the test-statistic is positive or negative has no bearing on how the $p$-value is calculated.
 </h5>
 
 ### 3. If your **critical region is in the left tail** (e.g., $H_0 : \mu \geq 1.5$) then you are going to use . . .
@@ -387,18 +381,15 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 <details>
   <summary>
-  Click here for Corresponding Confidence Interval Information
+  Confidence Interval Information
   </summary>
 
 <br>
 
 $\begin{aligned}
-\text{Confidence Interval} &= \bar{x} + \text{(critical t-score)} \cdot \text{(standard error)} \\
+\text{Confidence Interval} &= \bar{x} + \text{(critical $t$-score)} \cdot \text{(standard error)} \\
 &= (-\infty, \text{ upper bound }]
 \end{aligned}$
-
-- The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu < 1.5$.
-- For one-tailed tests, the critical t-score is calculated using the *entire* significance level $\alpha$.
 
 ```{r}
 # Critical t-calculation
@@ -406,6 +397,8 @@ alpha <- 0.05
 abs(qt(alpha, df = 4))
 ```
 
+- The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu < 1.5$.
+- For one-tailed tests, the critical $t$-score is calculated using the *entire* significance level $\alpha$.
 - The absolute value (`abs()`) is used because the direction of the boundary is already specified by the addition (+) in the confidence interval equation.
 
 </details>
@@ -496,18 +489,15 @@ ggplot(dist_df, aes(x = x, y = dens)) +
 
 <details>
   <summary>
-  Click here for Corresponding Confidence Interval Information
+  Confidence Interval Information
   </summary>
 
 <br>
 
 $\begin{aligned}
-\text{Confidence Interval} &= \bar{x} - \text{(critical t-score)} \cdot \text{(standard error)} \\
+\text{Confidence Interval} &= \bar{x} - \text{(critical $t$-score)} \cdot \text{(standard error)} \\
 &= [\text{ lower bound}, \infty)
 \end{aligned}$
-
-- The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu > 1.5$.
-- For one-tailed tests, the critical t-score is calculated using the *entire* significance level $\alpha$.
 
 ```{r}
 # Critical t-calculation
@@ -515,6 +505,8 @@ alpha <- 0.05
 abs(qt(alpha, df = 4))
 ```
 
+- The confidence interval is expressed in terms of the alternative hypothesis $H_1: \mu > 1.5$.
+- For one-tailed tests, the critical $t$-score is calculated using the *entire* significance level $\alpha$.
 - The absolute value (`abs()`) is used because the direction of the boundary is already specified by the subtraction (-) in the confidence interval equation.
 
 </details>
